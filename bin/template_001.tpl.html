@@ -1,0 +1,32 @@
+<div style="border-bottom: 1px solid blue; padding: 5px;">
+<span style="background-color: black; color: yellow; padding: 2px;">licznik: {$counter}</span><br />
+simple variable1 - <b>{$var1}</b> - test<br />
+again simple variable1: <b>{$var1}</b> <br />
+simple variable2: <b>{$var2}</b> <br />
+object's value: <b>{$object.value}</b> <br />
+objects'method $obiekt.method(): <b>{$object.method()}</b> <br />
+sub objects'method $obiekt.method(): <b>{$object.subobject.method()}</b> <br />
+WRONG objects'method $obiekt.method()(): <b>{$object.method()()}</b> <br />
+array value: <b>{$array[1]}</b> <br />
+deep array value: <b>{$array[1][1]}</b> <br />
+cudzysłów: "<br />
+apostrof: '<br />
+slash: /<br />
+backslash: \<br />
+backslash-cudzysłów: \"<br />
+backslash-apostrof: \'<br />
+backslash-slash: \/<br />
+backslash-backslash: \\<br />
+test tekstu javascript i ignorowanie literal:  <pre>
+{literal}
+<!--<script type="text/javascript"> -->
+	$(document).ready( function() {
+		var a = { a: function() { return false; } };
+		alert('test');
+	});
+<!--</script> -->
+{/literal}
+</pre>
+...a tutaj już koniec tempate'a
+<br />
+</div>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script type="text/javascript" src="./tools/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="./tools/Timer.js"></script>
+	<script type="text/javascript" src="./tools/JSLitmus.js"></script>
+	<script type="text/javascript" src="../src/YAJSmartyTemplate.js"></script>
+	<script type="text/javascript" src="../src/YAJSmartyCompiledResource.js"></script>
+	<script type="text/javascript" src="../src/YAJSmartyResourceCache.js"></script>
+	<script type="text/javascript" src="../src/YAJSmartyResourceCacheItem.js"></script>
+</head>
+<body>
+<pre>
+- mierzenie czasu
+</pre>
+<script type="text/javascript">
+	function test(template, i) {
+		template.assign( 'counter', i );
+		template.assign( 'var1', 'first value:' + Math.floor(Math.random()*9) );
+		template.assign( 'var2', 'second value:' +  + Math.floor(Math.random()*9) );
+		template.assign( 'object', { 
+			value: 'object\'s value: '  + Math.floor(Math.random()*9),
+			method: function() {
+				return 'object\'s method: '  + Math.floor(Math.random()*99)
+			},
+			subobject: {
+				method: function() {
+					return 'sub-object\'s method: '  + Math.floor(Math.random()*99)
+				}
+			}
+		} );
+		return template.fetch( 'template_001.tpl.html' );
+	}
+	
+	$(document).ready( function() {
+		var timer = new Timer()
+		var template = new YAJSmartyTemplate();
+		var s = '';
+		for( var i = 0; i < 1; i++) {
+			s = s + test(template, i);
+		}
+		$('#time1').html( timer.getTime());
+		timer.start();
+		$('#YAJSmartyTemplateTest').html( s );
+		$('#time2').html( timer.getTime());
+		JSLitmus.test('YAJSmarty test', function() {
+			test(template,1);
+		} );
+		
+	});
+</script>
+create string from template: <div id="time1"></div>
+writing html string into div: <div id="time2"></div>
+<div id="YAJSmartyTemplateTest"></div>
+<pre id="YAJSmartyTemplateTestPre"></pre>
+</body>
+</html>
