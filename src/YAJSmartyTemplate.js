@@ -32,7 +32,7 @@ YAJSmartyTemplate.prototype.assign = function(sVarName, varValue) {
 
 YAJSmartyTemplate.prototype.loadResource = function( sResourceName ) {
 	var result = null;
-	//alert('ajax load: ' + sResourceName );
+	//@TODO: remove jQuery requirements
 	$.ajax({
 		async: false,
 		type: 'GET',
@@ -52,8 +52,7 @@ YAJSmartyTemplate.prototype.loadResource = function( sResourceName ) {
 };
 
 YAJSmartyTemplate.prototype.findObjects = function(data) {
-//	var re_obiekty = /\{\$[A-z0-9_]+([\.][A-z0-9_]+(\(\))*)+\}/igm; //wyciagniecie elementów w formie {$element.pole.poleMozeBycMetoda().innepole}
-	var re_objects = new RegExp(		
+	var reObjects = new RegExp(		
 		"\\{\\$" +				// {$
 		"[a-z0-9_]+" +			// some_object_Name 
 		"("+
@@ -65,45 +64,46 @@ YAJSmartyTemplate.prototype.findObjects = function(data) {
 		")+"+
 		"\\}",					// }
 		"igm"
-	); //wyciagniecie elementów w formie {$element.pole.poleMozeBycMetoda().innepole}	
+	); //extract elements {$element.field.method().field}	
 		
-	var aObjects = data.match(re_objects);
+	var aObjects = data.match(reObjects);
 	return aObjects;
 }
 
 YAJSmartyTemplate.prototype.findVariables = function(data) {
-	var re_proste_zmienne = /\{\$[a-z0-9_]+\}/igm; //wyciagniecie elementow w formie {$element}
+	var reSimpleVariables = /\{\$[a-z0-9_]+\}/igm; //extract simple, flat element {$element}
 
-	var aSimpleVariables = data.match(re_proste_zmienne);
+	var aSimpleVariables = data.match(reSimpleVariables);
 	return aSimpleVariables;
 }
 
 YAJSmartyTemplate.prototype.fillTemplateVars = function(aFoundElements, oTemplateVars) {
-	var sProstaZmienna = null;
-	var sProstaZmiennaName = null;
+	var sElement = null;
+	var sElementName = null;
 	for(var key in aFoundElements) {
-		sProstaZmienna = new String( aFoundElements[key] );
-		sProstaZmiennaName = sProstaZmienna.replace( /[\{\$\}]/igm, '' ); //ze stringa w formacie '{$element}' robi 'element'
-//		console.log(sProstaZmiennaName);
-		oTemplateVars[sProstaZmiennaName] = ''; //wpisywanie zmiennych do obiektu... jednocześnie mergowanie gdy zmienna występuje więcej razy
+		sElement = new String( aFoundElements[key] );
+		sElementName = sElement.replace( /[\{\$\}]/igm, '' ); //remove brackets '{$element}' robi 'element'
+		oTemplateVars[sElementName] = ''; //initialize empty element value... and merge for multiple occurences
+		//@TODO: wrong initialize for object methods and fields  object.field => oTemplateVars['object'] = { field: ''}
+		//or access fields/methods with proxy function
 	}
-//	console.log(oTemplateVars);
-
 }
 
 YAJSmartyTemplate.prototype.replaceTemplateVars = function(data, oTemplateVars) {
-	var rePattern = null;
-	var sWartoscZmiennej = null;
-	for(var sProstaZmiennaName in oTemplateVars) {
+	var reReplacePattern = null;
+	var sJsVariableValueReplacement = null;
+	for(var sVariableName in oTemplateVars) {
 //		console.log(sProstaZmiennaName);
-		var sProstaZmiennaNameRe = sProstaZmiennaName.replace( /\./igm, '\\.' );  
-		sProstaZmiennaNameRe = sProstaZmiennaNameRe.replace( /\(/igm, '\\(' );  
-		sProstaZmiennaNameRe = sProstaZmiennaNameRe.replace( /\)/igm, '\\)' );  		
-		var sReplacePattern = '\\{\\$' + sProstaZmiennaNameRe + '\\}';
+		//prepare variable name for RE replace - to replace in input string
+		var sPreparedFindVariableName = sVariableName.replace( /\./igm, '\\.' );  
+		sPreparedFindVariableName = sPreparedFindVariableName.replace( /\(/igm, '\\(' );  
+		sPreparedFindVariableName = sPreparedFindVariableName.replace( /\)/igm, '\\)' );  		
+		var sReplacePattern = '\\{\\$' + sPreparedFindVariableName + '\\}';
 //		console.log(sReplacePattern);
-		rePattern = new RegExp(sReplacePattern,'igm'); //;
-		sWartoscZmiennej = '\' + o.' + sProstaZmiennaName + ' + \'';
-		data = data.replace( rePattern, sWartoscZmiennej );
+		reReplacePattern = new RegExp(sReplacePattern,'igm'); //;
+		sJsVariableValueReplacement = '\' + o.' + sVariableName + ' + \'';
+		//TODO: all replacements should be done at one run - i think it should be one RE in whole template with replace callback
+		data = data.replace( reReplacePattern, sJsVariableValueReplacement );
 	}
 	return data;
 }
