@@ -6,9 +6,9 @@ Smarty is PHP Template engine, more info here: http://www.smarty.net/
 
 Several years ago i started this project. YAJS was used only in private/test websites and now its time to become public.
 
-TODO:
+**@TODO**:
 - milestone 1 - initialize
-	- initial commit
+	- [x] initial commit
 	- translate comments and names to english
 	- write small tutorial
 - milestone 2 - new features
