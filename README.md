@@ -10,14 +10,23 @@ Several years ago i started this project. YAJS was used only in private/test web
 - milestone 1 - initialize
 	- [x] initial commit
 	- translate comments and names to english
+	- add licence headers
 	- write small tutorial
-- milestone 2 - new features
-	- encapsulate project into closure package (build script)
+	- remove jQuery requirements
+		- jQuery should be optional - when detected act as jQuery plugin
+		- ajax loading should be optional
+		- replacement foe extend (merge object)
+	- separate smarty parser from compiled template engine (posibility to add other parsers)
+	- build script
+		- encapsulate project into closure package
+		- minimize, remove comments except license info
+	- release 1.0 version
+- milestone 2 - extendex features
 	- add arrays support
-- milestone 3 - extended features
-	- add xUnit tests
 	- add loops support
-	- remove jQuery requirements (jQuery should be optional)
-- miestone 4 - optimization
+- milestone 3 - testing and optimization
+	- add xUnit tests
 	- real life cases benchmarking
 	- increase performance
+	- compare with other java script based template engines
+
