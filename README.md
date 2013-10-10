@@ -21,7 +21,7 @@ Several years ago i started this project. YAJS was used only in private/test web
 		- encapsulate project into closure package
 		- minimize, remove comments except license info
 	- release 1.0 version
-- milestone 2 - extendex features
+- milestone 2 - extended features
 	- add arrays support
 	- add loops support
 - milestone 3 - testing and optimization

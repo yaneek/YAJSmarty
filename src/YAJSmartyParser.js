@@ -9,9 +9,7 @@
  */
 //--------------------------------------------------------------------------------------------------
 var YAJSmartyParser = function( options ) {
-	if ( options != null ) {
-		$.extend( this, options );
-	}
+	YAJSmartyTools.extend( this, options );
 };
 
 YAJSmartyParser.prototype.parse = function( data, oTemplateVars ) {

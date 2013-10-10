@@ -12,9 +12,7 @@ var YAJSmartyTemplate = function( options ) {
 	/** @var YAJSmartyResourceCache */
 	this.oYAJSmartyResourceCache = null;	
 	this.templateVars = {};
-	if ( options != null ) {
-		$.extend( this, options );
-	}
+	YAJSmartyTools.extend( this, options );
 };
 /**
  * @return YAJSmartyResourceCache;
@@ -112,8 +110,8 @@ YAJSmartyTemplate.prototype.getCompiledResource = function( sResourceName ) {
 YAJSmartyTemplate.prototype.fetch = function( sResourceName ) {
 	var oCompiledResource = this.getCompiledResource(sResourceName);
 	var oTemplateVars = {};
-	
-	$.extend( oTemplateVars, oCompiledResource.templateVars, this.templateVars ); //do pustego obiektu sa kopiowane skompilowane zmienne i nadpisane lokalnie w template
+	YAJSmartyTools.extend(oTemplateVars, oCompiledResource.templateVars); //default values from compiled resource
+	YAJSmartyTools.extend(oTemplateVars, this.templateVars); //new assigned values
 
 	return oCompiledResource.compiledTemplate.fetch(oTemplateVars);
 }
