@@ -28,7 +28,7 @@ YAJSmartyParser.prototype.parse = function( data, oTemplateVars ) {
 	data = this.replaceTemplateVars(data, oTemplateVars);
 
 	return data;
-}
+};
 
 YAJSmartyParser.prototype.findObjects = function(data) {
 	var reObjects = new RegExp(		
@@ -47,14 +47,14 @@ YAJSmartyParser.prototype.findObjects = function(data) {
 		
 	var aObjects = data.match(reObjects);
 	return aObjects;
-}
+};
 
 YAJSmartyParser.prototype.findVariables = function(data) {
 	var reSimpleVariables = /\{\$[a-z0-9_]+\}/igm; //extract simple, flat element {$element}
 
 	var aSimpleVariables = data.match(reSimpleVariables);
 	return aSimpleVariables;
-}
+};
 
 YAJSmartyParser.prototype.fillTemplateVars = function(aFoundElements, oTemplateVars) {
 	var sElement = null;
@@ -66,7 +66,7 @@ YAJSmartyParser.prototype.fillTemplateVars = function(aFoundElements, oTemplateV
 		//@TODO: wrong initialize for object methods and fields  object.field => oTemplateVars['object'] = { field: ''}
 		//or access fields/methods with proxy function
 	}
-}
+};
 
 YAJSmartyParser.prototype.replaceTemplateVars = function(data, oTemplateVars) {
 	var reReplacePattern = null;
@@ -85,4 +85,4 @@ YAJSmartyParser.prototype.replaceTemplateVars = function(data, oTemplateVars) {
 		data = data.replace( reReplacePattern, sJsVariableValueReplacement );
 	}
 	return data;
-}
+};

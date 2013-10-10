@@ -22,7 +22,7 @@ YAJSmartyTemplate.prototype.getResourceCache = function() {
 		this.oYAJSmartyResourceCache = new YAJSmartyResourceCache();
 	}
 	return this.oYAJSmartyResourceCache;
-}
+};
 
 YAJSmartyTemplate.prototype.assign = function(sVarName, varValue) {
 	this.templateVars[sVarName] = varValue;
@@ -85,12 +85,12 @@ YAJSmartyTemplate.prototype.compile = function( data ) {
 	\n}';
 	eval( sJS );
 	return new YAJSmartyCompiledResource( oTemplateVars, oCompiledTemplate );
-}
+};
 
 YAJSmartyTemplate.prototype.getParser = function( sParserName ) {
 	var result = new YAJSmartyParser();
 	return result;
-}
+};
 
 YAJSmartyTemplate.prototype.getCompiledResource = function( sResourceName ) {
 	var result = null;
@@ -105,7 +105,7 @@ YAJSmartyTemplate.prototype.getCompiledResource = function( sResourceName ) {
 	}
 
 	return result;
-}
+};
 
 YAJSmartyTemplate.prototype.fetch = function( sResourceName ) {
 	var oCompiledResource = this.getCompiledResource(sResourceName);
@@ -114,4 +114,4 @@ YAJSmartyTemplate.prototype.fetch = function( sResourceName ) {
 	YAJSmartyTools.extend(oTemplateVars, this.templateVars); //new assigned values
 
 	return oCompiledResource.compiledTemplate.fetch(oTemplateVars);
-}
+};
